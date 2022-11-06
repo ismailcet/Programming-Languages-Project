@@ -8,4 +8,6 @@ public interface LanguageService {
 	List<ProgrammingLanguage> getAll();
 	ProgrammingLanguage getLanguageById(int id);
 	public void add(ProgrammingLanguage programmingLanguage);
+	public void update(ProgrammingLanguage programmingLanguage);
+	public void delete(int id);
 }

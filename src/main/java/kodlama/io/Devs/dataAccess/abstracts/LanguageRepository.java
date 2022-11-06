@@ -12,7 +12,7 @@ public interface LanguageRepository {
 	List<ProgrammingLanguage> getAll();
 	ProgrammingLanguage getLanguageById(int id);
     void add(ProgrammingLanguage programmingLanguage);
-//	void update(int i);
-//	void delete(int i);
+	void update(ProgrammingLanguage programmingLanguage);
+	void delete(int id);
 	
 }

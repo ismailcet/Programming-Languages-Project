@@ -40,6 +40,33 @@ public class LanguageManager implements LanguageService{
 		
 		languageRepository.add(programmingLanguage);
 	}
+
+
+	@Override
+	public void update(ProgrammingLanguage programmingLanguage) {
+		
+		languageRepository.update(programmingLanguage);
+		
+	}
+
+
+	@Override
+	public void delete(int id) {
+		
+		languageRepository.delete(getIndex(id));
+		
+	}
+	
+	private int getIndex(int id) {
+		
+		List<ProgrammingLanguage> languages = languageRepository.getAll();
+		for (ProgrammingLanguage language1 : languages){
+            if(language1.getId() == id){
+               return languages.indexOf(language1);
+            }
+        }
+		 throw new RuntimeException("Nesne Bulunamadı!");
+	}
 	
 
 }

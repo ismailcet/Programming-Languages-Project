@@ -27,7 +27,7 @@ public class InMemoryLanguageRepository implements LanguageRepository{
 	
 	@Override
 	public List<ProgrammingLanguage> getAll() {
-		// TODO Auto-generated method stub
+
 		return programmingLanguages;
 	}
 
@@ -43,20 +43,25 @@ public class InMemoryLanguageRepository implements LanguageRepository{
 
 	@Override
 	public void add(ProgrammingLanguage programmingLanguage) {
-		// TODO Auto-generated method stub
+
 		programmingLanguages.add(programmingLanguage);
 	}
-//
-//	@Override
-//	public void update(int i) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void delete(int i) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+
+	@Override
+	public void update(ProgrammingLanguage programmingLanguage) {
+
+		for(ProgrammingLanguage language:programmingLanguages) {
+			if(programmingLanguage.getId() == language.getId()) {
+				language.setName(programmingLanguage.getName());
+			}
+		}
+	}
+
+	@Override
+	public void delete(int id) {
+		
+		programmingLanguages.remove(id);
+		
+	}
 
 }
