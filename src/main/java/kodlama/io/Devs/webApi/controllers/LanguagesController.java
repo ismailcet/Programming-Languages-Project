@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kodlama.io.Devs.business.abstracts.LanguageService;
-import kodlama.io.Devs.entities.concretes.ProgrammingLanguage;
+import kodlama.io.Devs.business.requests.CreateLanguageRequest;
+import kodlama.io.Devs.business.responses.GetAllLanguegesResponse;
 
 @RestController
 @RequestMapping("/api/")
@@ -29,26 +29,26 @@ public class LanguagesController {
 	}
 	
 	@GetMapping("/languages/getall")
-	public List<ProgrammingLanguage> getAll(){
+	public List<GetAllLanguegesResponse> getAll(){
 		return languageService.getAll();
 	}
 	
 	@GetMapping("/language/{id}")
-	public ProgrammingLanguage getLanguageById(@PathVariable("id") int id) {
+	public GetAllLanguegesResponse getLanguageById(@PathVariable("id") int id) {
 		
 		return languageService.getLanguageById(id);
 	}
 	
 	@PostMapping("/language/add")
-	public String add(@RequestBody ProgrammingLanguage programmingLanguage) {
-		languageService.add(programmingLanguage);
-		 return "Listeye "+programmingLanguage.getId() + " numaralı, " + programmingLanguage.getName() + " dili eklenmiştir.";
+	public String add(@RequestBody CreateLanguageRequest createLanguageRequest) {
+		languageService.add(createLanguageRequest);
+		 return "Listeye "+ createLanguageRequest.getName() + " dili eklenmiştir.";
 	}
 	
 	@PutMapping("/language/update")
-	public String update(@RequestBody ProgrammingLanguage programmingLanguage) {
-		languageService.update(programmingLanguage);
-		return programmingLanguage.getId() + " numaralı dilin adı " + programmingLanguage.getName() + " olarak güncellenmiştir.";
+	public String update(@RequestBody GetAllLanguegesResponse getAllLanguegesResponse) {
+		languageService.update(getAllLanguegesResponse);
+		return getAllLanguegesResponse.getId() + " numaralı dilin adı " + getAllLanguegesResponse.getName() + " olarak güncellenmiştir.";
 	}
 	
 	@DeleteMapping("/language/delete/{id}")

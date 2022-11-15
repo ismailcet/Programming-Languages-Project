@@ -1,11 +1,14 @@
 package kodlama.io.Devs.business.concretes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlama.io.Devs.business.abstracts.LanguageService;
+import kodlama.io.Devs.business.requests.CreateLanguageRequest;
+import kodlama.io.Devs.business.responses.GetAllLanguegesResponse;
 import kodlama.io.Devs.dataAccess.abstracts.LanguageRepository;
 import kodlama.io.Devs.entities.concretes.ProgrammingLanguage;
 
@@ -22,51 +25,67 @@ public class LanguageManager implements LanguageService{
 
 
 	@Override
-	public List<ProgrammingLanguage> getAll() {
+	public List<GetAllLanguegesResponse> getAll() {
+		List<ProgrammingLanguage> programmingLanguages=languageRepository.findAll();
+		List<GetAllLanguegesResponse> languagesResponses=new ArrayList<GetAllLanguegesResponse>();
+		
+		
+		for(ProgrammingLanguage programmingLanguage:programmingLanguages) {
+			GetAllLanguegesResponse responseItem=new GetAllLanguegesResponse();
+			responseItem.setId(programmingLanguage.getId());
+			responseItem.setName(programmingLanguage.getName());
+			
+			languagesResponses.add(responseItem);
+		}
+		return languagesResponses;
 
-		return languageRepository.getAll();
 	}
 
 
 	@Override
-	public ProgrammingLanguage getLanguageById(int id) {
+	public GetAllLanguegesResponse getLanguageById(int id) {
 
-		return languageRepository.getLanguageById(id);
+		ProgrammingLanguage language = this.languageRepository.findById(id).get();
+		GetAllLanguegesResponse getAllLanguegesResponse = new GetAllLanguegesResponse();
+		
+		getAllLanguegesResponse.setId(language.getId());
+		getAllLanguegesResponse.setName(language.getName());
+		
+		return getAllLanguegesResponse;
 	}
 
 
 	@Override
-	public void add(ProgrammingLanguage programmingLanguage) {
+	public void add(CreateLanguageRequest createLanguageRequest) {
+		ProgrammingLanguage programmingLanguage = new ProgrammingLanguage();
+		programmingLanguage.setName(createLanguageRequest.getName());
 		
-		languageRepository.add(programmingLanguage);
+		this.languageRepository.save(programmingLanguage);
+		
 	}
 
 
 	@Override
-	public void update(ProgrammingLanguage programmingLanguage) {
+	public void update(GetAllLanguegesResponse getAllLanguegesResponse) {
 		
-		languageRepository.update(programmingLanguage);
+		ProgrammingLanguage programmingLanguage = new ProgrammingLanguage();
 		
+		programmingLanguage.setId(getAllLanguegesResponse.getId());
+		programmingLanguage.setName(getAllLanguegesResponse.getName());
+		
+		languageRepository.save(programmingLanguage);
 	}
 
 
 	@Override
 	public void delete(int id) {
+		ProgrammingLanguage programmingLanguage = new ProgrammingLanguage();
 		
-		languageRepository.delete(getIndex(id));
+		programmingLanguage.setId(id);
+		languageRepository.delete(programmingLanguage);;
 		
 	}
 	
-	private int getIndex(int id) {
-		
-		List<ProgrammingLanguage> languages = languageRepository.getAll();
-		for (ProgrammingLanguage language1 : languages){
-            if(language1.getId() == id){
-               return languages.indexOf(language1);
-            }
-        }
-		 throw new RuntimeException("Nesne Bulunamadı!");
-	}
 	
 
 }
